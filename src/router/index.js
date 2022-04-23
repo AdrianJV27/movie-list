@@ -16,7 +16,31 @@ const routes = [
     component: () => import(/* webpackChunkName: "about" */ '../views/AboutView.vue')
   },
   {
-    path: '/pelicula/:id',
+    path: '/popular',
+    name: 'popular',
+    // route level code-splitting
+    // this generates a separate chunk (popular.[hash].js) for this route
+    // which is lazy-loaded when the route is visited.
+    component: () => import(/* webpackChunkName: "popular" */ '../views/PopularView.vue')
+  },
+  {
+    path: '/top-rated',
+    name: 'top-rated',
+    // route level code-splitting
+    // this generates a separate chunk (top-rated.[hash].js) for this route
+    // which is lazy-loaded when the route is visited.
+    component: () => import(/* webpackChunkName: "top-rated" */ '../views/TopRatedView.vue')
+  },
+  {
+    path: '/upcoming',
+    name: 'upcoming',
+    // route level code-splitting
+    // this generates a separate chunk (upcoming.[hash].js) for this route
+    // which is lazy-loaded when the route is visited.
+    component: () => import(/* webpackChunkName: "upcoming" */ '../views/UpcomingView.vue')
+  },
+  {
+    path: '/pelicula/:movieType/:id',
     name: 'movie',
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
@@ -26,7 +50,8 @@ const routes = [
     //si no unicamente deberia pasar el objeto en forma de JSON y despues transformarlo en objeto de javascript de nuevo
     props: ( route ) => {
       const id = Number(route.params.id)
-      return isNaN( id ) ? { id: 1} : { id }
+      const movieType = route.params.movieType
+      return isNaN( id ) ? { id: 1, movieType} : { id, movieType }
     }
   }
 ]
