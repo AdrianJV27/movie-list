@@ -5,6 +5,7 @@
       <router-link :to="{name:'popular'}">Popular</router-link> |
       <router-link :to="{name:'top-rated'}">Top Rated</router-link> |
       <router-link :to="{name:'upcoming'}">Upcoming</router-link> |
+      <router-link :to="{name:'favourites'}">Favourites</router-link> |
       <router-link to="/about">About</router-link>
     </nav>
     <div class="p-2"></div>
@@ -46,6 +47,12 @@ nav {
 nav a {
   font-weight: bold;
   color: #2f8c7c;
+  text-decoration: none;
+
+}
+
+nav a:hover {
+    color: #5a968c;
 }
 
 nav a.router-link-exact-active {

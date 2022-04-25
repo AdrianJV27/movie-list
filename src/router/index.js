@@ -40,6 +40,14 @@ const routes = [
     component: () => import(/* webpackChunkName: "upcoming" */ '../views/UpcomingView.vue')
   },
   {
+    path: '/favourites',
+    name: 'favourites',
+    // route level code-splitting
+    // this generates a separate chunk (upcoming.[hash].js) for this route
+    // which is lazy-loaded when the route is visited.
+    component: () => import(/* webpackChunkName: "upcoming" */ '../views/Favourites.vue')
+  },
+  {
     path: '/pelicula/:movieType/:id',
     name: 'movie',
     // route level code-splitting

@@ -91,4 +91,14 @@ footer{
   right: 0;
   background-color: #070f18;
 }
+a {
+  font-weight: bold;
+  color: #2f8c7c;
+  text-decoration: none;
+
+}
+
+a:hover {
+    color: #5a968c;
+}
 </style>

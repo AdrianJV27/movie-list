@@ -23,7 +23,7 @@
                             <div class="col-4 small-text"><h6>{{movie.vote_count}} Votes</h6></div>
                         </div>
                         <div class="col-4">
-                            <span class='bi bi-star' style='color:#ff6600'></span>
+                            <FavoritesButton :movie="movie"/>
                         </div>
                     </div>
                     <div class="row">
@@ -46,6 +46,7 @@
 
 <script>
 import getMovieAPI from '@/helpers/getMovie';
+import FavoritesButton from '@/components/FavoritesButton';
 export default {
     props:{
         id:{
@@ -59,6 +60,9 @@ export default {
         return{
             movie: null,
         }
+    },
+    components:{
+        FavoritesButton,
     },
     methods:{
         async getMovie(){

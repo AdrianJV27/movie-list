@@ -12,6 +12,7 @@
               <h5 class="card-title">{{movie.title}}</h5>
               <p class="card-text">{{description(movie.overview)}}</p>
             </div>
+            <div class="button-favourites"><FavoritesButton :movie="movie"/></div>
             <router-link class="btn btn-success" :to="{name:'movie', params: { id: movie.id, movieType: moviesType }}"> 
               See more...
             </router-link>
@@ -41,6 +42,7 @@
 import getMoviesAPI from '@/helpers/getMovies';
 import { Carousel, Slide, Pagination, Navigation } from 'vue3-carousel';
 import 'vue3-carousel/dist/carousel.css';
+import FavoritesButton from '@/components/FavoritesButton';
 
 
 export default {
@@ -49,6 +51,7 @@ export default {
     Slide,
     Pagination,
     Navigation,
+    FavoritesButton
   },
   props: {
     moviesType: {
@@ -153,7 +156,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
   .text-left{
     text-align: left;
   }
@@ -177,13 +180,6 @@ export default {
   /* .carousel__viewport{
     margin-bottom: 30px;
   } */
-  a{
-    color: white;
-    text-decoration: none;
-  }
-  a:hover{
-    color:beige
-  }
   img{
     width: 100%;
   }
