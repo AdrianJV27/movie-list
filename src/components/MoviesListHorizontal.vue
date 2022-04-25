@@ -1,27 +1,38 @@
 <template>
-  <template v-if="movies">
+  <template v-if="movies" >
+    <div class="p-3">
+      <h1 v-if="width > 400" class="text-left ps-5" >{{title}}{{width}}</h1>
+      <h3 v-else class="title-mobile ps-3">{{title}}{{width}}</h3>
+      <Carousel :settings="settings" :breakpoints="breakpoints" :wrapAround="true">
+      <!-- //Quiero hacer que en movil se vea solo las imagenes mas pequeñas -->
+        <Slide v-for="movie in movies" :key="movie.id">
+          <div v-if="width > 400" class="card " style="width: 18rem;">
+            <img :src="imageUrl(movie.poster_path)" class="card-img-top" alt="...">
+            <div class="card-body">
+              <h5 class="card-title">{{movie.title}}</h5>
+              <p class="card-text">{{description(movie.overview)}}</p>
+            </div>
+            <router-link class="btn btn-success" :to="{name:'movie', params: { id: movie.id, movieType: moviesType }}"> 
+              See more...
+            </router-link>
+          </div>
 
-  <h1>{{title}}</h1>
-  <Carousel :settings="settings" :breakpoints="breakpoints" :wrapAround="true">
+          <div v-else class="p-3" style="width: 18rem;">
+            <router-link class="" :to="{name:'movie', params: { id: movie.id, movieType: moviesType }}"> 
+            <img :src="imageUrl(movie.poster_path)" class="card-img-top rounded" alt="...">
+            <!-- <div class="card-body">
+              <h5 class="card-title">{{movie.title}}</h5>
+              <p class="card-text">{{description(movie.overview)}}</p>
+            </div> -->
+            </router-link>
+          </div>
+        </Slide>
 
-    <Slide v-for="movie in movies" :key="movie.id">
-      <!-- <div class="card" style="width: 18rem;">
-        <img :src="imageUrl(movie.poster_path)" class="card-img-top" alt="...">
-        <div class="card-body">
-          <h5 class="card-title">{{movie.title}}</h5>
-          <p class="card-text">{{description(movie.overview)}}</p>
-        </div>
-        <router-link class="btn btn-success" :to="{name:'movie', params: { id: movie.id, movieType: moviesType }}"> 
-          See more...
-        </router-link>
-      </div> -->
-      a
-    </Slide>
-
-    <template #addons >
-      <Navigation />
-    </template>
-  </Carousel>
+        <template #addons >
+          <Navigation />
+        </template>
+      </Carousel>
+    </div>
   </template>
 
 </template>
@@ -49,32 +60,35 @@ export default {
     return {
       movies: null,
       page: 1,
+      width: window.innerWidth, 
+      height: window.innerHeight,
       settings: {
         itemsToShow: 1,
-        snapAlign: 'center',
+        snapAlign: 'start',
       },
       // breakpoints are mobile first
       // any settings not specified will fallback to the carousel settings
       breakpoints: {
         0: {
-          itemsToShow: 1,
-          snapAlign: 'center',
+          itemsToShow: 3.25,
+          itemsToScroll: 3,
+          snapAlign: 'start',
         },
         // 700px and up
-        600: {
+        450: {
           itemsToShow: 2,
-          snapAlign: 'center',
+          snapAlign: 'start',
         },
         // 1024 and up
         1024: {
           itemsToShow: 3,
           itemsToScroll: 3,
-          snapAlign: 'center',
+          snapAlign: 'start',
         },
         1524: {
           itemsToShow: 5,
           itemsToScroll: 5,
-          snapAlign: 'center',
+          snapAlign: 'start',
         },
       },
     }
@@ -104,7 +118,11 @@ export default {
     },
     description(desc){
       return desc.slice(0, 150).trim() + (desc.length > 150? "..." : '' )
-    }
+    },
+    onResize(e) {
+      this.width = window.innerWidth;
+      this.height = window.innerHeight;
+    },
   },
   computed: {
     title(){
@@ -122,16 +140,27 @@ export default {
   //Gracias al created no falla al espera a tener el valor de movie y asi no falla a la hora de renderizar //No me acuerdo muy bien
   created(){
     this.getMovies()
+    window.addEventListener("resize", this.onResize);
     // this.loadGlider()
     // let element = (document.querySelector(`.glider-${this.moviesType}`));
     // console.log(element);
     // console.log("created");
 
   },
+  destroyed() {
+    window.removeEventListener("resize", this.onResize);
+  },
 };
 </script>
 
 <style>
+  .text-left{
+    text-align: left;
+  }
+  .title-mobile{
+    text-align: left !important;
+    margin: 0;
+  }
   .container{
     display: flex;
   }
@@ -145,9 +174,9 @@ export default {
   .card img {
         width: 100%;
   }
-  .carousel__viewport{
-    margin-bottom: 100px;
-  }
+  /* .carousel__viewport{
+    margin-bottom: 30px;
+  } */
   a{
     color: white;
     text-decoration: none;
@@ -158,7 +187,6 @@ export default {
   img{
     width: 100%;
   }
-
   .carousel__slide > .carousel__item {
   transform: scale(1);
   opacity: 0.5;
@@ -179,6 +207,7 @@ export default {
 }
 .carousel__next, .carousel__prev{
   transform: translate(0%, -50%)!important;
+  background-color: #198754;
 }
 
 </style>

@@ -1,9 +1,9 @@
 <template>
     <template v-if="movie">
-        <div class="container">
+        <div class="container shadow p-3 rounded" :style="cssVars">
             <div class="row">
                 <div class="col-4">
-                    <img :src="`https://image.tmdb.org/t/p/w500${movie.poster_path}`"  class="img-fluid rounded-start" alt="...">
+                    <img :src="`https://image.tmdb.org/t/p/w500${movie.poster_path}`"  class="rounded img-fluid rounded-start" alt="...">
                 </div>
                 <div class="col-8 text-start">
                     <div class="row">
@@ -19,10 +19,17 @@
                                 <span class="percentage text-end">{{valorationPercentage}}</span>
                             </div>
                         </div>
-                        <div class="col-4 small-text"><h6>{{movie.vote_count}} Votes</h6></div>
+                        <div class="col-4">
+                            <div class="col-4 small-text"><h6>{{movie.vote_count}} Votes</h6></div>
+                        </div>
+                        <div class="col-4">
+                            <span class='bi bi-star' style='color:#ff6600'></span>
+                        </div>
                     </div>
                     <div class="row">
-                        <p>{{movie.overview}}</p>
+                        <div class="col-">
+                            <p>{{movie.overview}}</p>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -78,7 +85,14 @@ export default {
     computed:{
         valorationPercentage(){
             return `${Number(this.movie.vote_average) * 10}%`
+        },
+        cssVars() {
+            return {
+                '--bg-image': `url(https://image.tmdb.org/t/p/w500${this.movie.poster_path})`,
+                '--bg-image-position': `cover`,
+            }
         }
+
     },
     created(){
         //Opcion 1
@@ -107,7 +121,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 .progress-bar-custom{
     position: relative;
 }
@@ -116,5 +130,11 @@ export default {
     font-weight: bold;
     position: absolute;
     right: 0;
+}
+.container{
+    background-color: #18222c;
+    /* background-image: var(--bg-image); */
+    /* background-position: var(--bg-image-position); */
+
 }
 </style>
