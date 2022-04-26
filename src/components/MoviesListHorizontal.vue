@@ -1,8 +1,7 @@
 <template>
   <template v-if="movies" >
     <div class="p-3">
-      <h1 v-if="width > 400" class="text-left ps-5" >{{title}}{{width}}</h1>
-      <h3 v-else class="title-mobile ps-3">{{title}}{{width}}</h3>
+      <h3 class="title-custom text-left ps3">{{title}}</h3>
       <Carousel :settings="settings" :breakpoints="breakpoints" :wrapAround="true">
       <!-- //Quiero hacer que en movil se vea solo las imagenes mas pequeñas -->
         <Slide v-for="movie in movies" :key="movie.id">
@@ -176,33 +175,29 @@ export default {
 </script>
 
 <style scoped>
+.text-left{
+  text-align: left;
+}
 
-  .text-left{
-    text-align: left;
-  }
-  .title-mobile{
-    text-align: left !important;
-    margin: 0;
-  }
-  .container{
-    display: flex;
-  }
-  .card{
-    width: 100px;
-    height: 100%;
-    padding: 5px;
-    color: white;
-    background-color: #18222c!important;
-  }
-  .card img {
-        width: 100%;
-  }
-  /* .carousel__viewport{
-    margin-bottom: 30px;
-  } */
-  img{
-    width: 100%;
-  }
+.container{
+  display: flex;
+}
+.card{
+  width: 100px;
+  height: 100%;
+  padding: 5px;
+  color: white;
+  background-color: #18222c!important;
+}
+.card img {
+      width: 100%;
+}
+/* .carousel__viewport{
+  margin-bottom: 30px;
+} */
+img{
+  width: 100%;
+}
 .carousel__slide > .carousel__item {
   transform: scale(1);
   opacity: 0.5;
@@ -223,4 +218,8 @@ export default {
 }
 
 
+.title-custom{
+  padding-left: 1rem!important;
+
+}
 </style>
