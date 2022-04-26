@@ -20,3 +20,10 @@ html {
     -moz-box-sizing: border-box;
     position: relative;
 }
+
+
+/* Carroussel */
+.carousel__next, .carousel__prev{
+    transform: translate(0%, -50%)!important;
+    background-color: #198754;
+  }

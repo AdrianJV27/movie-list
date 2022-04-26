@@ -6,16 +6,22 @@
       <Carousel :settings="settings" :breakpoints="breakpoints" :wrapAround="true">
       <!-- //Quiero hacer que en movil se vea solo las imagenes mas pequeñas -->
         <Slide v-for="movie in movies" :key="movie.id">
-          <div v-if="width > 400" class="card " style="width: 18rem;">
-            <img :src="imageUrl(movie.poster_path)" class="card-img-top" alt="...">
+          <div v-if="width > 1024" class="card " style="width: 18rem;">
+            <div class="test"><img :src="imageUrl(movie.poster_path)" class="card-img-top" alt="..."></div>
             <div class="card-body">
               <h5 class="card-title">{{movie.title}}</h5>
               <p class="card-text">{{description(movie.overview)}}</p>
             </div>
-            <div class="button-favourites"><FavoritesButton :movie="movie"/></div>
-            <router-link class="btn btn-success" :to="{name:'movie', params: { id: movie.id, movieType: moviesType }}"> 
-              See more...
-            </router-link>
+            <div class="row">
+              <div class="col-8">
+                <router-link class="btn btn-success" :to="{name:'movie', params: { id: movie.id, movieType: moviesType }}"> 
+                  See more...
+                </router-link>
+              </div>
+              <div class="col-4">
+                <FavoritesButton :movie="movie"/>
+              </div>
+            </div>
           </div>
 
           <div v-else class="p-3" style="width: 18rem;">
@@ -78,18 +84,31 @@ export default {
           snapAlign: 'start',
         },
         // 700px and up
-        450: {
-          itemsToShow: 2,
+        400: {
+          itemsToShow: 4.25,
+          snapAlign: 'start',
+        },
+        700: {
+          itemsToShow: 5.25,
+          snapAlign: 'start',
+        },
+        750: {
+          itemsToShow: 5.25,
           snapAlign: 'start',
         },
         // 1024 and up
-        1024: {
-          itemsToShow: 3,
+        1025: {
+          itemsToShow: 3.25,
+          itemsToScroll: 3,
+          snapAlign: 'start',
+        },
+        1325: {
+          itemsToShow: 4.25,
           itemsToScroll: 3,
           snapAlign: 'start',
         },
         1524: {
-          itemsToShow: 5,
+          itemsToShow: 5.25,
           itemsToScroll: 5,
           snapAlign: 'start',
         },
@@ -157,6 +176,7 @@ export default {
 </script>
 
 <style scoped>
+
   .text-left{
     text-align: left;
   }
@@ -183,7 +203,7 @@ export default {
   img{
     width: 100%;
   }
-  .carousel__slide > .carousel__item {
+.carousel__slide > .carousel__item {
   transform: scale(1);
   opacity: 0.5;
   transition: 0.5s;
@@ -201,9 +221,6 @@ export default {
 .carousel__slide--active > .carousel__item {
   transform: scale(1.1);
 }
-.carousel__next, .carousel__prev{
-  transform: translate(0%, -50%)!important;
-  background-color: #198754;
-}
+
 
 </style>

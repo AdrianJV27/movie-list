@@ -15,7 +15,7 @@ export default {
     },
     data(){
         return {
-            favourites: null,
+            favourites: [],
             isInFavourites: false,
         }
     },
@@ -29,11 +29,13 @@ export default {
             }
         },
         saveFavorites(){
+                this.checkFavourites()
                 this.favourites.push(this.movie)
                 localStorage.setItem("Favourites", JSON.stringify(this.favourites))
                 this.movieExistInFavourites()
         },
         deleteFavorites(){
+                this.checkFavourites()
                 this.favourites = this.favourites.filter(movie => this.movie.id != movie.id)
                 localStorage.setItem("Favourites", JSON.stringify(this.favourites))
                 this.movieExistInFavourites()
@@ -49,7 +51,7 @@ export default {
     created(){
         this.checkFavourites()
         this.movieExistInFavourites()
-    }
+    },
 }
 </script>
 
