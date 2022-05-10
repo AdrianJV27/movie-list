@@ -1,7 +1,7 @@
 <template>
     <div v-if="favourites">
-        <button v-if="!isInFavourites" class="btn btn-success" @click="saveFavorites()">⭐</button>
-        <button v-else class="btn btn-success" @click="deleteFavorites()">❌</button>
+        <button v-if="!isInFavourites" class="btn btn-success" @click="modifyFavourite('save')">⭐</button>
+        <button v-else class="btn btn-success" @click="modifyFavourite('delete')">❌</button>
     </div>
 </template>
 
@@ -28,17 +28,23 @@ export default {
                 this.favourites = JSON.parse(localStorage.getItem("Favourites"))
             }
         },
-        saveFavorites(){
+        modifyFavourite(operation){
                 this.checkFavourites()
-                this.favourites.push(this.movie)
-                localStorage.setItem("Favourites", JSON.stringify(this.favourites))
+                switch (operation) {
+                    case 'save':
+                            this.favourites.push(this.movie)
+                            localStorage.setItem("Favourites", JSON.stringify(this.favourites))
+                        break;
+                    case 'delete':
+                            this.favourites = this.favourites.filter(movie => this.movie.id != movie.id)
+                            localStorage.setItem("Favourites", JSON.stringify(this.favourites))
+                        break;
+                
+                    default:
+                        break;
+                }
                 this.movieExistInFavourites()
-        },
-        deleteFavorites(){
-                this.checkFavourites()
-                this.favourites = this.favourites.filter(movie => this.movie.id != movie.id)
-                localStorage.setItem("Favourites", JSON.stringify(this.favourites))
-                this.movieExistInFavourites()
+                this.$emit('modifiedFavourite')
         },
         movieExistInFavourites(){
             if(!!this.favourites.find(movie => this.movie.id == movie.id)){

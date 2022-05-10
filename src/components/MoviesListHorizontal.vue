@@ -5,33 +5,7 @@
       <Carousel :settings="settings" :breakpoints="breakpoints" :wrapAround="true">
       <!-- //Quiero hacer que en movil se vea solo las imagenes mas pequeñas -->
         <Slide v-for="movie in movies" :key="movie.id">
-          <div v-if="width > 1024" class="card " style="width: 18rem;">
-            <div class="test"><img :src="imageUrl(movie.poster_path)" class="card-img-top" alt="..."></div>
-            <div class="card-body">
-              <h5 class="card-title">{{movie.title}}</h5>
-              <p class="card-text">{{description(movie.overview)}}</p>
-            </div>
-            <div class="row">
-              <div class="col-8">
-                <router-link class="btn btn-success" :to="{name:'movie', params: { id: movie.id, movieType: moviesType }}"> 
-                  See more...
-                </router-link>
-              </div>
-              <div class="col-4">
-                <FavoritesButton :movie="movie"/>
-              </div>
-            </div>
-          </div>
-
-          <div v-else class="p-3" style="width: 18rem;">
-            <router-link class="" :to="{name:'movie', params: { id: movie.id, movieType: moviesType }}"> 
-            <img :src="imageUrl(movie.poster_path)" class="card-img-top rounded" alt="...">
-            <!-- <div class="card-body">
-              <h5 class="card-title">{{movie.title}}</h5>
-              <p class="card-text">{{description(movie.overview)}}</p>
-            </div> -->
-            </router-link>
-          </div>
+            <SingleMovie :movie="movie"/>
         </Slide>
 
         <template #addons >
@@ -44,11 +18,12 @@
 </template>
 
 <script>
+// TODO: añadir lazy import
 import getMoviesAPI from '@/helpers/getMovies';
 import { Carousel, Slide, Pagination, Navigation } from 'vue3-carousel';
 import 'vue3-carousel/dist/carousel.css';
 import FavoritesButton from '@/components/FavoritesButton';
-
+import SingleMovie from './SingleMovie';
 
 export default {
   components:{
@@ -56,7 +31,8 @@ export default {
     Slide,
     Pagination,
     Navigation,
-    FavoritesButton
+    FavoritesButton,
+    SingleMovie
   },
   props: {
     moviesType: {
@@ -117,7 +93,15 @@ export default {
   methods: {
     async getMovies(){
       const movies = await getMoviesAPI(this.moviesType, this.page)
-      localStorage.setItem(this.moviesType, JSON.stringify(movies));
+
+      let moviesLocalStorage = localStorage.getItem('movies') && JSON.parse(localStorage.getItem('movies'))
+      if (!moviesLocalStorage) {
+          localStorage.setItem("movies", '[]')
+          moviesLocalStorage = JSON.parse(localStorage.getItem('movies'))
+      }
+      moviesLocalStorage.push(...movies)
+      localStorage.setItem('movies', JSON.stringify(moviesLocalStorage));
+
       this.movies = movies;
       // console.log(this.movies);
     },
@@ -182,7 +166,7 @@ export default {
 .container{
   display: flex;
 }
-.card{
+/* .card{
   width: 100px;
   height: 100%;
   padding: 5px;
@@ -192,12 +176,10 @@ export default {
 .card img {
       width: 100%;
 }
-/* .carousel__viewport{
-  margin-bottom: 30px;
-} */
+
 img{
   width: 100%;
-}
+} */
 .carousel__slide > .carousel__item {
   transform: scale(1);
   opacity: 0.5;

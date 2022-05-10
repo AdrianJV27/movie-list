@@ -16,28 +16,16 @@ const routes = [
     component: () => import(/* webpackChunkName: "about" */ '../views/AboutView.vue')
   },
   {
-    path: '/popular',
-    name: 'popular',
+    path: '/movie-list/:movieType',
+    name: 'movie-list',
     // route level code-splitting
     // this generates a separate chunk (popular.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "popular" */ '../views/PopularView.vue')
-  },
-  {
-    path: '/top-rated',
-    name: 'top-rated',
-    // route level code-splitting
-    // this generates a separate chunk (top-rated.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "top-rated" */ '../views/TopRatedView.vue')
-  },
-  {
-    path: '/upcoming',
-    name: 'upcoming',
-    // route level code-splitting
-    // this generates a separate chunk (upcoming.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "upcoming" */ '../views/UpcomingView.vue')
+    component: () => import(/* webpackChunkName: "popular" */ '../views/MoviesList.vue'),
+    props: ( route ) => {
+      const movieType = route.params.movieType
+      return {movieType}
+    }
   },
   {
     path: '/favourites',
@@ -48,7 +36,7 @@ const routes = [
     component: () => import(/* webpackChunkName: "upcoming" */ '../views/Favourites.vue')
   },
   {
-    path: '/pelicula/:movieType/:id',
+    path: '/pelicula/:id',
     name: 'movie',
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
@@ -58,8 +46,7 @@ const routes = [
     //si no unicamente deberia pasar el objeto en forma de JSON y despues transformarlo en objeto de javascript de nuevo
     props: ( route ) => {
       const id = Number(route.params.id)
-      const movieType = route.params.movieType
-      return isNaN( id ) ? { id: 1, movieType} : { id, movieType }
+      return isNaN( id ) ? { id: 1} : { id }
     }
   }
 ]

@@ -52,9 +52,6 @@ export default {
         id:{
             type: Number
         },
-        movieType:{
-            type: String
-        }
     },
     data(){
         return{
@@ -74,8 +71,9 @@ export default {
                 this.$router.push({name: 'home'})
             }
         },
+        //si tengo guardad  la pelicula en movies dentro del local storage la recuperará si no llamara a la api
         saveMovieIfExist(){
-            const movieList = JSON.parse(localStorage.getItem(this.movieType));
+            const movieList = JSON.parse(localStorage.getItem('movies'));
             if(movieList){
                 const movie = movieList.find( mov => mov.id == this.id);
                 if(movie){

@@ -24,6 +24,6 @@ export default {
   components: {
     Banner,
     MoviesListHorizontal
-  }
+  },
 }
 </script>

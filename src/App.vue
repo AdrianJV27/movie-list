@@ -2,14 +2,14 @@
   <div>
     <nav>
       <router-link to="/">Home</router-link> |
-      <router-link :to="{name:'popular'}">Popular</router-link> |
-      <router-link :to="{name:'top-rated'}">Top Rated</router-link> |
-      <router-link :to="{name:'upcoming'}">Upcoming</router-link> |
+      <router-link :key="'popular'" :to="{name:'movie-list', params: { movieType:'popular' } }">Popular</router-link> |
+      <router-link :key="'top_rated'" :to="{name:'movie-list', params: { movieType:'top_rated' } }">Top Rated</router-link> |
+      <router-link :key="'upcoming'" :to="{name:'movie-list', params: { movieType:'upcoming' } }">Upcoming</router-link> |
       <router-link :to="{name:'favourites'}">Favourites</router-link> |
       <router-link to="/about">About</router-link>
     </nav>
     <div class="p-2"></div>
-    <router-view/>
+    <router-view :key="$route.fullPath"/>
     <div class="p-5"></div>
     <Footer/>
   </div>
