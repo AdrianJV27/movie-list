@@ -1,7 +1,7 @@
 <template>
   <div>
     <nav>
-      <router-link to="/">Home</router-link> |
+      <router-link :to="{name:'home'}">Home</router-link> |
       <router-link :key="'popular'" :to="{name:'movie-list', params: { movieType:'popular' } }">Popular</router-link> |
       <router-link :key="'top_rated'" :to="{name:'movie-list', params: { movieType:'top_rated' } }">Top Rated</router-link> |
       <router-link :key="'upcoming'" :to="{name:'movie-list', params: { movieType:'upcoming' } }">Upcoming</router-link> |
