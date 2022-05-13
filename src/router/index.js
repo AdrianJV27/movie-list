@@ -28,7 +28,7 @@ const routes = [
     }
   },
   {
-    path: '/favourites',
+    path: '/movie-list/favourites',
     name: 'favourites',
     // route level code-splitting
     // this generates a separate chunk (upcoming.[hash].js) for this route
@@ -36,7 +36,7 @@ const routes = [
     component: () => import(/* webpackChunkName: "upcoming" */ '../views/Favourites.vue')
   },
   {
-    path: '/pelicula/:id',
+    path: '/movie-list/pelicula/:id',
     name: 'movie',
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
