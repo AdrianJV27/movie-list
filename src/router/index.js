@@ -1,14 +1,18 @@
-import { createRouter, createWebHistory } from 'vue-router'
+import { createRouter, createWebHistory, createWebHashHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
 
 const routes = [
+  {
+    path:'/',
+    redirect: { name: 'home' }
+  },
   {
     path: '/movie-list',
     name: 'home',
     component: HomeView
   },
   {
-    path: '/about',
+    path: '/movie-list/about',
     name: 'about',
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
@@ -52,7 +56,7 @@ const routes = [
 ]
 
 const router = createRouter({
-  history: createWebHistory(process.env.BASE_URL),
+  history: createWebHashHistory(),
   routes
 })
 
